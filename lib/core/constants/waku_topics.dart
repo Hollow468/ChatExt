@@ -5,6 +5,12 @@ class WakuTopics {
     return '/waku/2/chatext/1/dm-${sorted[0]}-${sorted[1]}/proto';
   }
 
+  static String groupTopic(String groupId) =>
+      '/waku/2/chatext/1/group-$groupId/proto';
+
+  static String groupMetaTopic(String groupId) =>
+      '/waku/2/chatext/1/group-$groupId-meta/proto';
+
   static const presence = '/waku/2/chatext/1/presence/proto';
   static const keyBundle = '/waku/2/chatext/1/key-bundle/proto';
 }

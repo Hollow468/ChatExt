@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
 
 import 'package:chatext/core/utils/key_utils.dart';
 

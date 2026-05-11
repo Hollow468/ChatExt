@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/screens/create_identity_screen.dart';
 import '../features/chat/screens/chat_list_screen.dart';
 import '../features/chat/screens/chat_detail_screen.dart';
 import '../features/contacts/screens/contact_list_screen.dart';
+import '../features/group/screens/create_group_screen.dart';
+import '../features/group/screens/group_chat_screen.dart';
 
 /// Application router configuration.
 final GoRouter appRouter = GoRouter(
@@ -32,6 +33,19 @@ final GoRouter appRouter = GoRouter(
       path: '/contacts',
       name: 'contacts',
       builder: (context, state) => const ContactListScreen(),
+    ),
+    GoRoute(
+      path: '/create-group',
+      name: 'createGroup',
+      builder: (context, state) => const CreateGroupScreen(),
+    ),
+    GoRoute(
+      path: '/group/:groupId',
+      name: 'groupChat',
+      builder: (context, state) {
+        final groupId = state.pathParameters['groupId']!;
+        return GroupChatScreen(groupId: groupId);
+      },
     ),
   ],
 );

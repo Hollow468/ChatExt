@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:chatext/screens/chat_list/chat_list_screen.dart';
+import 'package:chatext/features/chat/screens/chat_list_screen.dart';
 
 void main() {
   group('ChatListScreen Widget Tests', () {

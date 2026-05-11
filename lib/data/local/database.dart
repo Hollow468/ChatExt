@@ -7,8 +7,10 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'daos/contact_dao.dart';
+import 'daos/group_dao.dart';
 import 'daos/message_dao.dart';
 import 'tables/contacts.dart';
+import 'tables/groups.dart';
 import 'tables/messages.dart';
 
 part 'database.g.dart';
@@ -16,7 +18,10 @@ part 'database.g.dart';
 /// Application-wide Drift database.
 ///
 /// Uses drift_sqflite on Android/iOS and NativeDatabase on desktop.
-@DriftDatabase(tables: [Messages, Contacts], daos: [MessageDao, ContactDao])
+@DriftDatabase(
+  tables: [Messages, Contacts, Groups, GroupMembers],
+  daos: [MessageDao, ContactDao, GroupDao],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
@@ -24,12 +29,18 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) async {
           await m.createAll();
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(groups);
+            await m.createTable(groupMembers);
+          }
         },
       );
 }

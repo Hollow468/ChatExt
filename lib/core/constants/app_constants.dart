@@ -17,4 +17,5 @@ class AppConstants {
   static const String identityBox = 'identity_box';
   static const String settingsBox = 'settings_box';
   static const String contactsBox = 'contacts_box';
+  static const String signalBox = 'signal_keys';
 }
