@@ -1,0 +1,37 @@
+syntax = "proto3";
+package chatext;
+option dart_package = 'chatext';
+
+message ChatMessage {
+  string id = 1;
+  string sender = 2;          // 公钥 ID (Base58)
+  string content = 3;
+  int64 timestamp = 4;        // Unix ms
+  MessageType type = 5;
+  string reply_to = 6;
+  string media_url = 7;
+}
+
+enum MessageType {
+  TEXT = 0;
+  IMAGE = 1;
+  FILE = 2;
+  SYSTEM = 3;
+}
+
+message KeyBundle {
+  string peer_id = 1;
+  bytes identity_key = 2;
+  bytes signed_pre_key = 3;
+  bytes signature = 4;
+  int64 timestamp = 5;
+}
+
+message GroupMeta {
+  string group_id = 1;
+  string name = 2;
+  string avatar_url = 3;
+  repeated string members = 4;
+  string creator = 5;
+  int64 created_at = 6;
+}
