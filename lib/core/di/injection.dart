@@ -20,7 +20,6 @@ import '../../services/identity/peer_resolver.dart';
 import '../../services/identity/profile_broadcast.dart';
 import '../../services/media/media_cache.dart';
 import '../../services/media/media_transfer.dart';
-import '../../services/push/fcm_service.dart';
 import '../../services/push/notification_handler.dart';
 import '../../services/push/push_registry.dart';
 import '../../services/storage/local_storage.dart';
@@ -63,8 +62,13 @@ Future<void> configureDependencies() async {
   getIt.registerSingleton<IdentityService>(IdentityService());
   getIt.registerSingleton<PeerResolver>(PeerResolver());
 
-  // WakuService — register implementation (not yet connected to native layer)
+  // WakuService — register and connect to native Go-Waku node
   getIt.registerSingleton<WakuService>(WakuServiceImpl());
+  await getIt<WakuService>().init(
+    AppConstants.defaultWakuHost,
+    AppConstants.defaultWakuPort,
+    AppConstants.bootstrapNodes,
+  );
 
   // Signal Protocol (E2E encryption)
   final signalKeyStore = SignalKeyStore();
@@ -82,13 +86,11 @@ Future<void> configureDependencies() async {
     MediaTransferService(waku: getIt<WakuService>()),
   );
 
-  // Push notifications
-  getIt.registerSingleton<FcmService>(FcmService());
+  // Presence tracking
   getIt.registerSingleton<NotificationHandler>(NotificationHandler());
   getIt.registerSingleton<PushRegistry>(
     PushRegistry(
       waku: getIt<WakuService>(),
-      fcm: getIt<FcmService>(),
       identity: getIt<IdentityService>(),
     ),
   );
