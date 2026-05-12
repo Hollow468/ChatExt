@@ -27,7 +27,7 @@ class FcmService {
   String? _fcmToken;
   String? get fcmToken => _fcmToken;
 
-  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  late FirebaseMessaging _messaging;
 
   final List<void Function(RemoteMessage)> _foregroundHandlers = [];
   final List<void Function(RemoteMessage)> _messageOpenedAppHandlers = [];
@@ -41,6 +41,7 @@ class FcmService {
   /// messages and notification taps.
   Future<void> init() async {
     if (_initialized) return;
+    _messaging = FirebaseMessaging.instance;
 
     // Register background handler.
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

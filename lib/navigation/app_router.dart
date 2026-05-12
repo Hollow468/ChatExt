@@ -6,6 +6,8 @@ import '../features/chat/screens/chat_detail_screen.dart';
 import '../features/contacts/screens/contact_list_screen.dart';
 import '../features/group/screens/create_group_screen.dart';
 import '../features/group/screens/group_chat_screen.dart';
+import '../features/settings/screens/profile_screen.dart';
+import '../features/settings/screens/settings_screen.dart';
 
 /// Application router configuration.
 final GoRouter appRouter = GoRouter(
@@ -46,6 +48,16 @@ final GoRouter appRouter = GoRouter(
         final groupId = state.pathParameters['groupId']!;
         return GroupChatScreen(groupId: groupId);
       },
+    ),
+    GoRoute(
+      path: '/settings',
+      name: 'settings',
+      builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/profile',
+      name: 'profile',
+      builder: (context, state) => const ProfileScreen(),
     ),
   ],
 );
