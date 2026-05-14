@@ -53,7 +53,6 @@ func NewWakuManager(host string, port int, bootstrapNodes []string) (*WakuManage
 	}
 
 	opts := []node.WakuNodeOption{
-		node.WithHostAddress(nil), // will use default
 		node.WithMultiaddress(listenAddr),
 		node.WithWakuRelay(),
 	}
